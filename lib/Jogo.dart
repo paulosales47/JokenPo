@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class Jogo extends StatefulWidget {
   @override
@@ -43,9 +44,18 @@ class _JogoState extends State<Jogo> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Image.asset("images/pedra.png", height: _tamanhoImagem),
-                Image.asset("images/papel.png", height: _tamanhoImagem),
-                Image.asset("images/tesoura.png", height: _tamanhoImagem),
+                GestureDetector(
+                  child: Image.asset("images/pedra.png", height: _tamanhoImagem),
+                  onTap: () => SelecionarOpcao("pedra")
+                ),
+                GestureDetector(
+                  child: Image.asset("images/papel.png", height: _tamanhoImagem),
+                  onTap: () => SelecionarOpcao("papel")
+                ),
+                GestureDetector(
+                  child: Image.asset("images/tesoura.png", height: _tamanhoImagem),
+                  onTap: () => SelecionarOpcao("tesoura")
+                ),
               ],
             )
 
@@ -54,7 +64,32 @@ class _JogoState extends State<Jogo> {
       )
     );
   }
+
+  void SelecionarOpcao(String opcaoUsuario){
+    List<String> _opcoes = ["pedra", "tesoura", "papel"];
+    String _opcaoMaquina = _opcoes[Random().nextInt(3)];
+
+    setState((){
+      _escolhaApp = "images/${_opcaoMaquina}.png";
+
+      if(opcaoUsuario == _opcaoMaquina){
+        _mensagemUsuario = "Empate!";
+        return;
+      }
+
+      if((opcaoUsuario == "papel" && _opcaoMaquina == "tesoura") ||
+         (opcaoUsuario == "tesoura" && _opcaoMaquina == "pedra") ||
+         (opcaoUsuario == "pedra" && _opcaoMaquina == "papel")){
+        _mensagemUsuario = "Você perdeu :(";
+        return;
+      }
+        _mensagemUsuario = "Você venceu !";
+    });
+
+  }
+
 }
+
 
 Size screenSize(BuildContext context) {
   return MediaQuery.of(context).size;
@@ -64,4 +99,3 @@ double screenHeight(BuildContext context, {double dividedBy = 1}) {
   print(screenSize(context).height / dividedBy);
   return screenSize(context).height / dividedBy;
 }
-
