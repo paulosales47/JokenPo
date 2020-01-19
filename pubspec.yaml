@@ -70,3 +70,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - images/padrao.png
+    - images/papel.png
+    - images/pedra.png
+    - images/tesoura.png
